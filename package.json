@@ -1,0 +1,39 @@
+{
+  "name": "location_api",
+  "version": "1.0.0",
+  "description": "backend including Express app coupled with MongoDB",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "check-types": "tsc",
+    "build": "npx babel src -d dist --extensions '.ts'",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M-delRio/Location-API.git"
+  },
+  "author": "Mike del Rio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/M-delRio/Location-API/issues"
+  },
+  "homepage": "https://github.com/M-delRio/Location-API#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/express": "^4.16.1",
+    "eslint": "^7.6.0",
+    "nodemon": "^2.0.4",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.16.4"
+  }
+}
