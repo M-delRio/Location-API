@@ -11,12 +11,5 @@ mongoose
   .catch(error => {
     throw error
   })
-  // .then(() => 
-
-
-  // ) 
   .then(() => console.log(`Listening on port ${port}!\n\nMongoDB connected`));
 
-// app.listen(port, () => {
-//   console.log(`Listening on port ${port}!`);
-// });
