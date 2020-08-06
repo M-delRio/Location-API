@@ -16,3 +16,6 @@ The following command (executed from the root folder of the API) seeds the datab
 ```console
 npx ts-node ./db/seed_localdb.ts
 ```
+
+** add note about changing layout of both collections to be nested by user
+

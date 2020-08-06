@@ -25,7 +25,7 @@ const insertMoments = async (data: any, db: any) => {
 
 // insert event documents
 const insertEvents = async (data: any, db: any) => {
-  // get the moments collection
+  // get the events collection
   const collection = db.collection('events');
 
   let event: any;
