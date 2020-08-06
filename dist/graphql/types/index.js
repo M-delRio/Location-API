@@ -11,7 +11,9 @@ var _merge = require("@graphql-tools/merge");
 
 var _Moment = _interopRequireDefault(require("./Moment/"));
 
-var typeDefs = [_Moment["default"]];
+var _Event = _interopRequireDefault(require("./Event/"));
+
+var typeDefs = [_Moment["default"], _Event["default"]];
 
 var _default = (0, _merge.mergeTypeDefs)(typeDefs);
 

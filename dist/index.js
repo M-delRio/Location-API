@@ -18,10 +18,6 @@ _mongoose["default"].connect(uri, options).then(function () {
   return _server["default"].listen(port);
 })["catch"](function (error) {
   throw error;
-}) // .then(() => 
-// ) 
-.then(function () {
+}).then(function () {
   return console.log("Listening on port ".concat(port, "!\n\nMongoDB connected"));
-}); // app.listen(port, () => {
-//   console.log(`Listening on port ${port}!`);
-// });
+});

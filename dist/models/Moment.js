@@ -26,7 +26,7 @@ var momentSchema = new _mongoose.Schema({
     type: String,
     required: true
   }
-}); // const Moment = mongoose.model("Moment", momentSchema);
+});
 
 var Moment = _mongoose["default"].model("Moment", momentSchema, "moments");
 

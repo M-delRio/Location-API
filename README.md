@@ -1,9 +1,41 @@
-# Requirements/Dependencies
+# Location API
+
+This GraphQL API accepts query params to a single endpoint. Data related `event` and `moment` objects can be queried as outlined below.
+
+# Usage
+## Query an ​event​ by a unique identifier
+### sample request with all available fields
+`
+{
+  event(id: "5f2b94ce639af760fb9fdc69") { 
+    _id
+    type
+    start
+    end
+    analysis_type
+    mode
+    distance
+    waypoints
+    trajectory
+    latitude
+    longitude
+    location
+  }
+}
+`
+
+# Deployment
+
+To run the endpoint in production:
+```console
+`npm run build && npm start`
+```
+
+# Requirements
 - Node.js
 - MongoDB
 
 # Database
-
 MongoDB is used to store data. A non-relational DB is appropriate for our use case:
 - **entity relationship**: there is a relationship between `events` and `moments` (an event can be associated with several moments) however this relationship is established dynamically by the `start` and `end` values of each entity
 - **scaling**: given the volume of data collected horizontal scaling which is simpler with denormalized data 
@@ -17,5 +49,5 @@ The following command (executed from the root folder of the API) seeds the datab
 npx ts-node ./db/seed_localdb.ts
 ```
 
-** add note about changing layout of both collections to be nested by user
+
 
