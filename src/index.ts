@@ -3,7 +3,7 @@ import app from "./server";
 const port = process.env.PORT || 3000;
 const uri = "mongodb://127.0.0.1:27017/location_api";
 
-// Connect to MongoDB with Mongoose.
+// Connect to MongoDB with Mongoose and start server
 const options = { useNewUrlParser: true, useUnifiedTopology: true }
 mongoose
   .connect(uri, options)

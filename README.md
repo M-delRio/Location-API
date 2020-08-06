@@ -5,7 +5,7 @@ This GraphQL API accepts query params to a single endpoint. Data related `event`
 # Usage
 ## Query an ​event​ by a unique identifier
 ### sample request with all available fields
-`
+```console
 {
   event(id: "5f2b94ce639af760fb9fdc69") { 
     _id
@@ -22,9 +22,12 @@ This GraphQL API accepts query params to a single endpoint. Data related `event`
     location
   }
 }
-`
+```
 
 # Deployment
+
+The API is still under development, the command below will deploy the server locally with the following endpoint
+`localhost:3000/location`
 
 To run the endpoint in production:
 ```console
@@ -38,7 +41,7 @@ To run the endpoint in production:
 # Database
 MongoDB is used to store data. A non-relational DB is appropriate for our use case:
 - **entity relationship**: there is a relationship between `events` and `moments` (an event can be associated with several moments) however this relationship is established dynamically by the `start` and `end` values of each entity
-- **scaling**: given the volume of data collected horizontal scaling which is simpler with denormalized data 
+- **scaling**: given the volume of data collected horizontal scaling is likely and can be simpler with denormalized data 
 
 The app is currently configured to retrieve data from a local store. To use the current version of the API MongoDB needs to be installed and running locally. A `location_api` database is required and can be created from the console with the following command
 ```console
