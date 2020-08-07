@@ -1,12 +1,31 @@
+# Production notes
+## Query format
+- the current use cases for our API all relate to query requests, as such HTTP GET requests are more semantically appropriate however existing support for POST requests can be added to future iterations of this documentation
+
 # Location API
 
 This GraphQL API accepts query params to a single endpoint. Data related `event` and `moment` objects can be queried as outlined below.
 
+# Response
+```
+{
+  "status": "ok",
+  "message": "Sucessful request",
+  "statusCode": 200,
+  "data": "{requested data}"
+}
+```
+
+
 # Usage
+GraphQL operations consist of multiline JSON. Submitting GET requests requires coercing JSON queries to query strings. Various tools exist to simplify sending queries such as [GraphiQL](https://www.apollographql.com/blog/4-simple-ways-to-call-a-graphql-api-a6807bcdb355/)
+
+The uses that follow each include the maximum amount of subfields that are available for a given query. 
+
 ## Query an ​event​ by a unique identifier
 ### sample request with all available fields
 ```console
-{
+query{
   event(id: "5f2b94ce639af760fb9fdc69") { 
     _id
     type
