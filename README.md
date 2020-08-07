@@ -6,16 +6,46 @@
 
 This GraphQL API accepts query params to a single endpoint. Data related `event` and `moment` objects can be queried as outlined below.
 
-# Response
+# Response - Succesful Request
 ```
 {
-  "status": "ok",
-  "message": "Sucessful request",
-  "statusCode": 200,
-  "data": "{requested data}"
+  "data": {
+    "subfield_name": "subfield value"
+  }
 }
+Status: 200 OK
 ```
 
+# Errors
+
+Error responses contain a message related to the error type. Depending on the error type additional information may be included in the response.
+
+## Example - Invalid Subfield
+### Request
+query {
+  event(id: "5f2b94ce639af760fb9fdc69") {
+     _idee
+    type
+  }
+}
+
+### Response
+```
+{
+  "errors": [
+    {
+      "message": "Cannot query field \"_i\" on type \"Event\". Did you mean \"_id\"?",
+      "locations": [
+        {
+          "line": 3,
+          "column": 6
+        }
+      ]
+    }
+  ]
+}
+Status: 400 Bad Request
+```
 
 # Usage
 GraphQL operations consist of multiline JSON. Submitting GET requests requires coercing JSON queries to query strings. Various tools exist to simplify sending queries such as [GraphiQL](https://www.apollographql.com/blog/4-simple-ways-to-call-a-graphql-api-a6807bcdb355/)
@@ -46,7 +76,7 @@ query{
 # Deployment
 
 The API is still under development, the command below will deploy the server locally with the following endpoint
-`localhost:3000/location`
+`localhost:3000/graphql`
 
 To run the endpoint in production:
 ```console

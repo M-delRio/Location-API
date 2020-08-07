@@ -1,6 +1,5 @@
 import findEvent from "../../services/find_event"
 // The Event schema
-import Event from "../../../models/Event";
 
 export default {
   Query: {

@@ -9,6 +9,7 @@ exports["default"] = void 0;
 
 var _find_event = _interopRequireDefault(require("../../services/find_event"));
 
+// The Event schema
 var _default = {
   Query: {
     event: _find_event["default"] // event: async (obj: any, args: { id: string }) => {

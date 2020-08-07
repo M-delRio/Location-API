@@ -9,7 +9,7 @@
     "build": "npx babel src -d dist --extensions '.ts'",
     "dev": "nodemon --exec babel-node src/index.ts",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,13 +31,17 @@
     "@babel/preset-typescript": "^7.10.4",
     "@types/express": "^4.16.1",
     "eslint": "^7.6.0",
+    "jest": "^26.2.2",
     "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
     "typescript": "^3.3.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "@types/cors": "^2.8.7",
+    "@types/jest": "^26.0.9",
     "@types/mongoose": "^5.7.34",
+    "@types/supertest": "^2.0.10",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
