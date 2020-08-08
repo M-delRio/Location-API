@@ -53,10 +53,37 @@ GraphQL operations consist of multiline JSON. Submitting GET requests requires c
 The uses that follow each include the maximum amount of subfields that are available for a given query. 
 
 ## Query an ​event​ by a unique identifier
-### sample request with all available fields
+The *event field* requires an **id** argument. This argument, a string, is used to retrieve a specific Event. 
+
+### sample request with all possible fields
 ```console
 query{
   event(id: "5f2b94ce639af760fb9fdc69") { 
+    _id
+    type
+    start
+    end
+    analysis_type
+    mode
+    distance
+    waypoints
+    trajectory
+    latitude
+    longitude
+    location
+  }
+}
+```
+
+## Query ​events​ that occurred on a specific date
+The *event field* requires a **date** string argument with the following format: **"YYYY-MM-DD"**. This argument, a string, is used to retrieve all events that occurred on that day. 
+
+The *event field* also accepts an optional **timezone** string argument with the following format: **+hh:mm** or **+hh:mm** . 
+
+### sample request with all possible fields
+```console
+query{
+  eventsOnDate(date: "2017-10-01", timezone: "+02:00") { 
     _id
     type
     start

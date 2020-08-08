@@ -24,6 +24,6 @@ export default `
 
   type Query {
     event(id: String!): Event
-    events: [Event!]
+    eventsOnDate(date: String!, timezone: String): [Event]
   }
 `

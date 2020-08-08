@@ -1,5 +1,3 @@
-import db from "mongoose";
-
 // The Moment schema.
 import Moment from "../../../models/Moment";
 
