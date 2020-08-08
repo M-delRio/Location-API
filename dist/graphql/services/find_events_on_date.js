@@ -26,7 +26,7 @@ var _Event = _interopRequireDefault(require("../../models/Event"));
 // +hh:mm or -hh:mm
 var findEventsOnDate = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(obj, args) {
-    var timeZone, startTime, endTime, fetchedEvent;
+    var timeZone, startTime, endTime, fetchedEvents;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -54,8 +54,8 @@ var findEventsOnDate = /*#__PURE__*/function () {
             });
 
           case 7:
-            fetchedEvent = _context.sent;
-            return _context.abrupt("return", fetchedEvent);
+            fetchedEvents = _context.sent;
+            return _context.abrupt("return", fetchedEvents);
 
           case 11:
             _context.prev = 11;

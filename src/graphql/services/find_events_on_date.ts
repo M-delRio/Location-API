@@ -32,7 +32,7 @@ const findEventsOnDate = async (obj: any, args: { date: string, timezone: string
   // console.log(startTime);
   // console.log(endTime);
   try {
-    const fetchedEvent = await Event.find({
+    const fetchedEvents = await Event.find({
       start: {
         $gte: startTime
       },
@@ -41,7 +41,7 @@ const findEventsOnDate = async (obj: any, args: { date: string, timezone: string
       }
     })
 
-    return fetchedEvent;
+    return fetchedEvents;
   } catch (error) {
     console.log(error);
   }

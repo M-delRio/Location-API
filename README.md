@@ -83,7 +83,10 @@ The *event field* requires an **id** argument. This argument, a string, is used 
 query{
   momentsByEvent(id: "5f2b94ce639af760fb9fdc69") { 
     _id
-    type
+    start
+    end
+    analysis_type
+    definition_id
   }
 }
 ```

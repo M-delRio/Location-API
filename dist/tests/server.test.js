@@ -77,12 +77,11 @@ describe("query an ​event​ by a unique identifier", function () {
 
             case 3:
               res = _context2.sent;
-              console.log(res.body);
               expect(res.body).toEqual(expectedBody);
               expect(res.statusCode).toBe(200);
               done();
 
-            case 8:
+            case 7:
             case "end":
               return _context2.stop();
           }

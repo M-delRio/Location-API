@@ -1,10 +1,8 @@
-// The Moment schema.
-import Moment from "../../../models/Moment";
+import findMomentsByEvent from "../../services/find_moments_by_event"
 
 export default {
   Query: {
-    moments: async () => {
-      momentsByEvent: findMomentsByEvent;
-    }
+    momentsByEvent: findMomentsByEvent
+
   }
 }
