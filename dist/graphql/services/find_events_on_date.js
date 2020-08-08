@@ -38,7 +38,8 @@ var findEventsOnDate = /*#__PURE__*/function () {
             }
 
             startTime = args.date + "T00:00:00" + timeZone;
-            endTime = args.date + "T23:59:59.999" + timeZone; // console.log(startTime);
+            endTime = args.date + "T23:59:59.999" + timeZone; // console.log(args.timezone);
+            // console.log(startTime);
             // console.log(endTime);
 
             _context.prev = 4;

@@ -75,6 +75,19 @@ query{
 }
 ```
 
+## Query ​moments that relate to a specific event
+The *event field* requires an **id** argument. This argument, a string, is used to target a an Event. All Moments that relate to the target Event (that occurred within the timeframe of the Event) or retrieved. 
+
+### sample request with all possible fields
+```console
+query{
+  momentsByEvent(id: "5f2b94ce639af760fb9fdc69") { 
+    _id
+    type
+  }
+}
+```
+
 ## Query ​events​ that occurred on a specific date
 The *event field* requires a **date** string argument with the following format: **"YYYY-MM-DD"**. This argument, a string, is used to retrieve all events that occurred on that day. 
 

@@ -8,7 +8,6 @@ export default `
   }
   
   type Query {
-    moment(id: String!): Moment
-    moments: [Moment!]
+    momentsByEvent: [Moment!]
   }
 `

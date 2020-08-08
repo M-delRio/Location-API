@@ -27,6 +27,8 @@ const findEventsOnDate = async (obj: any, args: { date: string, timezone: string
   const startTime: string = args.date + "T00:00:00" + timeZone;
   const endTime: string = args.date + "T23:59:59.999" + timeZone;
 
+  // console.log(args.timezone);
+
   // console.log(startTime);
   // console.log(endTime);
   try {

@@ -25,7 +25,7 @@ describe("query an ​event​ by a unique identifier", function () {
   afterAll(function (done) {
     _mongoose["default"].disconnect(done);
   });
-  it("response with valid id query param", /*#__PURE__*/function () {
+  it("response with valid id query arg", /*#__PURE__*/function () {
     var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(done) {
       var res;
       return _regenerator["default"].wrap(function _callee$(_context) {
@@ -60,23 +60,29 @@ describe("query an ​event​ by a unique identifier", function () {
       return _ref.apply(this, arguments);
     };
   }());
-  it("response with invalid subfield", /*#__PURE__*/function () {
+  it("response with non existant id query arg", /*#__PURE__*/function () {
     var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(done) {
-      var res;
+      var expectedBody, res;
       return _regenerator["default"].wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
-              return request.get("/graphql?query={event(id:\"5f2b94ce639af760fb9fdc69\"){_idee}}");
+              expectedBody = {
+                "data": {
+                  "event": null
+                }
+              };
+              _context2.next = 3;
+              return request.get("/graphql?query={event(id:\"z\"){_id}}");
 
-            case 2:
+            case 3:
               res = _context2.sent;
-              // expect(res.body).toEqual(expectedResponse);
-              expect(res.statusCode).toEqual(400);
+              console.log(res.body);
+              expect(res.body).toEqual(expectedBody);
+              expect(res.statusCode).toBe(200);
               done();
 
-            case 5:
+            case 8:
             case "end":
               return _context2.stop();
           }
@@ -88,20 +94,23 @@ describe("query an ​event​ by a unique identifier", function () {
       return _ref2.apply(this, arguments);
     };
   }());
-});
-describe("query an ​event​ by a unique identifier", function () {
-  beforeAll(function () {
-    _mongoose["default"].connect(uri, options);
-  });
-  afterAll(function (done) {
-    _mongoose["default"].disconnect(done);
-  });
-  it("response with valid id query param", /*#__PURE__*/function () {
+  it("error with invalid subfield", /*#__PURE__*/function () {
     var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(done) {
+      var res;
       return _regenerator["default"].wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
+              _context3.next = 2;
+              return request.get("/graphql?query={event(id:\"5f2b94ce639af760fb9fdc69\"){_idee}}");
+
+            case 2:
+              res = _context3.sent;
+              // expect(res.body).toEqual(expectedResponse);
+              expect(res.statusCode).toEqual(400);
+              done();
+
+            case 5:
             case "end":
               return _context3.stop();
           }
@@ -113,12 +122,30 @@ describe("query an ​event​ by a unique identifier", function () {
       return _ref3.apply(this, arguments);
     };
   }());
-  it("response with invalid subfield", /*#__PURE__*/function () {
+});
+describe("query events that occurred on a specific date", function () {
+  beforeAll(function () {
+    _mongoose["default"].connect(uri, options);
+  });
+  afterAll(function (done) {
+    _mongoose["default"].disconnect(done);
+  });
+  it("response with valid date query arg", /*#__PURE__*/function () {
     var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(done) {
+      var res;
       return _regenerator["default"].wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
+              _context4.next = 2;
+              return request.get("/graphql?query={eventsOnDate(date:\"2017-10-01\", timezone: \"%2B02:00\"){type}}");
+
+            case 2:
+              res = _context4.sent;
+              expect(res.statusCode).toEqual(200);
+              done();
+
+            case 5:
             case "end":
               return _context4.stop();
           }
@@ -128,6 +155,33 @@ describe("query an ​event​ by a unique identifier", function () {
 
     return function (_x4) {
       return _ref4.apply(this, arguments);
+    };
+  }());
+  it("response with invalid subfield", /*#__PURE__*/function () {
+    var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(done) {
+      var res;
+      return _regenerator["default"].wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return request.get("/graphql?query={eventsOnDate(date:\"2017-10-01\", timezone: \"%2B02:00\"){typee}}");
+
+            case 2:
+              res = _context5.sent;
+              expect(res.statusCode).toEqual(400);
+              done();
+
+            case 5:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function (_x5) {
+      return _ref5.apply(this, arguments);
     };
   }());
 });
