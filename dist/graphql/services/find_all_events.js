@@ -30,29 +30,27 @@ var findAllEvents = /*#__PURE__*/function () {
               args.offset = 1;
             }
 
-            console.log(args.limit);
-            console.log(args.offset);
-            _context.prev = 4;
-            _context.next = 7;
+            _context.prev = 2;
+            _context.next = 5;
             return _Event["default"].find({}).sort({
               start: 1
             }).skip(args.offset).limit(args.limit);
 
-          case 7:
+          case 5:
             fetchedEvents = _context.sent;
             return _context.abrupt("return", fetchedEvents);
 
-          case 11:
-            _context.prev = 11;
-            _context.t0 = _context["catch"](4);
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](2);
             console.log(_context.t0);
 
-          case 14:
+          case 12:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[4, 11]]);
+    }, _callee, null, [[2, 9]]);
   }));
 
   return function findAllEvents(_x, _x2) {
