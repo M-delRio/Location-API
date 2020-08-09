@@ -51,7 +51,7 @@ var eventSchema = new _mongoose.Schema({
     required: false
   },
   location: {
-    type: Object,
+    type: Array,
     required: false
   }
 });

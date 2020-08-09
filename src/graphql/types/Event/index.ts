@@ -7,6 +7,10 @@ export default `
     accuracy: String!
   }
 
+  type Location {
+    significance: String!
+  }
+
   type Event {
     _id: ID!,
     type: String!,
@@ -19,11 +23,12 @@ export default `
     trajectory: String,
     latitude: String,
     longitude: String,
-    location: String,
+    location: [Location],
   }
 
   type Query {
     event(id: String!): Event
+    events: [Event]
     eventsOnDate(date: String!, timezone: String): [Event]
   }
 `

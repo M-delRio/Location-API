@@ -37,14 +37,6 @@ describe("query an ​event​ by a unique identifier", function () {
 
             case 2:
               res = _context.sent;
-              // .query({query:
-              //   {
-              //     event(id: "5f2b94ce639af760fb9fdc69") {
-              //       _id
-              //       type
-              //   }
-              // }})
-              // expect(body.status).toBe("ok");
               expect(res.statusCode).toBe(200);
               done();
 
@@ -193,21 +185,30 @@ describe("query events that are related to a moment", function () {
   });
   it("response with existing object id", /*#__PURE__*/function () {
     var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(done) {
-      var res;
+      var expectedBody, res;
       return _regenerator["default"].wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
-              _context6.next = 2;
+              expectedBody = {
+                "data": {
+                  "momentsByEvent": [{
+                    "_id": "5f2b94cd639af760fb9fda13",
+                    "analysis_type": "processed",
+                    "definition_id": "nearby_work"
+                  }]
+                }
+              };
+              _context6.next = 3;
               return request.get("/graphql?query={momentsByEvent(id:\"5f2b94ce639af760fb9fdbf9\"){_id, analysis_type, definition_id}}");
 
-            case 2:
+            case 3:
               res = _context6.sent;
-              // expect(res.body).toEqual(expectedBody);
+              expect(res.body).toEqual(expectedBody);
               expect(res.statusCode).toBe(200);
               done();
 
-            case 5:
+            case 7:
             case "end":
               return _context6.stop();
           }

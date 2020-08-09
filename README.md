@@ -76,7 +76,9 @@ query{
     trajectory
     latitude
     longitude
-    location
+    location {
+      significance
+    }
   }
 }
 ```
@@ -87,12 +89,45 @@ The *event field* requires an **id** argument. This argument, a string, is used 
 ### sample request with all possible fields
 ```console
 query{
-  momentsByEvent(id: "5f2b94ce639af760fb9fdc69") { 
+  momentsByEvent(id: "5f2b94ce639af760fb9fdbf9") { 
     _id
     start
     end
     analysis_type
     definition_id
+  }
+}
+```
+
+## Query all ​events​ 
+The *event field* requires a **date** string argument with the following format: **"YYYY-MM-DD"**. This argument, a string, is used to retrieve all events that occurred on that day. 
+
+The *event field* also accepts an optional **timezone** string argument with the following format: **+hh:mm** or **+hh:mm** . 
+
+### sample request with all possible fields
+```console
+query{
+  events() { 
+    _id
+    type
+    start
+    end
+    analysis_type
+    mode
+    distance
+    waypoints {
+      type
+      latitude
+      longitude
+      timestamp
+      accuracy
+      }
+    trajectory
+    latitude
+    longitude
+    location {
+      significance
+    }
   }
 }
 ```
@@ -123,7 +158,9 @@ query{
     trajectory
     latitude
     longitude
-    location
+    location {
+      significance
+    }
   }
 }
 ```

@@ -42,7 +42,7 @@ const eventSchema = new Schema({
     required: false
   },
   location: {
-    type: Object,
+    type: Array,
     required: false
   }
 });
