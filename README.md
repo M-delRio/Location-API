@@ -100,14 +100,16 @@ query{
 ```
 
 ## Query all ​events​ 
-The *event field* requires a **date** string argument with the following format: **"YYYY-MM-DD"**. This argument, a string, is used to retrieve all events that occurred on that day. 
+Events are returned in ascending order according to their start date. Pagination is supported with two optional arguments: **limit** and **offset**. 
 
-The *event field* also accepts an optional **timezone** string argument with the following format: **+hh:mm** or **+hh:mm** . 
+The **limit** integer argument determines how many **Event** objects will be returned. 
+
+The **offset** integer argument determines at which **Event** (**Events** are sorted according to their start date) the query should begin. 
 
 ### sample request with all possible fields
 ```console
 query{
-  events() { 
+  events(limit:1, offset:10) { 
     _id
     type
     start

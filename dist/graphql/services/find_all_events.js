@@ -20,25 +20,39 @@ var findAllEvents = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.prev = 0;
-            _context.next = 3;
-            return _Event["default"].find({});
+            //set default value for limit
+            if (args.limit === undefined) {
+              args.limit = 5;
+            } // set default value for offset
 
-          case 3:
+
+            if (args.offset == undefined) {
+              args.offset = 1;
+            }
+
+            console.log(args.limit);
+            console.log(args.offset);
+            _context.prev = 4;
+            _context.next = 7;
+            return _Event["default"].find({}).sort({
+              start: 1
+            }).skip(args.offset).limit(args.limit);
+
+          case 7:
             fetchedEvents = _context.sent;
             return _context.abrupt("return", fetchedEvents);
 
-          case 7:
-            _context.prev = 7;
-            _context.t0 = _context["catch"](0);
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](4);
             console.log(_context.t0);
 
-          case 10:
+          case 14:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[4, 11]]);
   }));
 
   return function findAllEvents(_x, _x2) {
