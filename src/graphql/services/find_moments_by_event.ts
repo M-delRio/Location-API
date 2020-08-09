@@ -24,9 +24,7 @@ const findMomentsByDate = async (obj: any, args: { id: string }) => {
         $lt: endTime
       }
     })
-
-    console.log(fetchedMoments);
-
+    // console.log(fetchedMoments);
 
     return fetchedMoments;
   } catch (error) {

@@ -16,21 +16,11 @@ describe("query an ​event​ by a unique identifier", () => {
   });
 
   it("response with valid id query arg", async (done) => {
-    // const requestQuery: string = "" 
 
     const res = await request
       .get(`/graphql?query={event(id:"5f2b94ce639af760fb9fdc69"){_id}}`)
 
-    // .query({query:
-    //   {
-    //     event(id: "5f2b94ce639af760fb9fdc69") {
-    //       _id
-    //       type
-    //   }
-    // }})
-
-    // expect(body.status).toBe("ok");
-    expect(res.statusCode).toEqual(200)
+    expect(res.statusCode).toBe(200)
 
     done();
   });
@@ -52,13 +42,25 @@ describe("query an ​event​ by a unique identifier", () => {
   });
 
   it("error with invalid subfield", async (done) => {
-    // const expectedResponse: string = `{"errors": [{"locations": [{"column": 39, "line": 1}], "message": "Cannot query field \"_idee\" on type \"Event\". Did you mean \"_id\" or \"mode\"?"}]}`
+    // const expectedResponse: { errors: { message: string, locations: { line: number, column: number }[] }[] } = {
+    //   "errors": [
+    //     {
+    //       "message": "Cannot query field \"_idee\" on type \"Event\". Did you mean \"_id\" or \"mode\"?",
+    //       "locations": [
+    //         {
+    //           "line": 1,
+    //           "column": 39
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // }
 
     const res = await request
       .get(`/graphql?query={event(id:"5f2b94ce639af760fb9fdc69"){_idee}}`)
 
     // expect(res.body).toEqual(expectedResponse);
-    expect(res.statusCode).toEqual(400)
+    expect(res.statusCode).toBe(400)
     done();
   });
 });
@@ -76,7 +78,7 @@ describe("query events that occurred on a specific date", () => {
     const res = await request
       .get(`/graphql?query={eventsOnDate(date:"2017-10-01", timezone: "%2B02:00"){type}}`)
 
-    expect(res.statusCode).toEqual(200)
+    expect(res.statusCode).toBe(200)
 
     done();
   });
@@ -85,7 +87,63 @@ describe("query events that occurred on a specific date", () => {
     const res = await request
       .get(`/graphql?query={eventsOnDate(date:"2017-10-01", timezone: "%2B02:00"){typee}}`)
 
-    expect(res.statusCode).toEqual(400)
+    expect(res.statusCode).toBe(400)
+    done();
+  });
+});
+
+describe("query events that are related to a moment", () => {
+  beforeAll(() => {
+    mongoose.connect(uri, options)
+  });
+
+  afterAll((done) => {
+    mongoose.disconnect(done);
+  });
+
+  it("response with existing object id", async (done) => {
+    const expectedBody: { data: { momentsByEvent: { _id: string, analysis_type: string, definition_id: string }[] } } = {
+      "data": {
+        "momentsByEvent": [
+          {
+            "_id": "5f2b94cd639af760fb9fda13",
+            "analysis_type": "processed",
+            "definition_id": "nearby_work"
+          }
+        ]
+      }
+    };
+
+    const res = await request
+      .get(`/graphql?query={momentsByEvent(id:"5f2b94ce639af760fb9fdbf9"){_id, analysis_type, definition_id}}`)
+
+    expect(res.body).toEqual(expectedBody);
+
+    expect(res.statusCode).toBe(200)
+
+    done();
+  });
+
+  it("error with invalid subfield", async (done) => {
+    // const expectedResponse: { errors: any } = {
+    //   "errors": [
+    //     {
+    //       "message": "Cannot query field \"_idee\" on type \"Moment\". Did you mean \"_id\"?",
+    //       "locations": [
+    //         {
+    //           "line": 3,
+    //           "column": 5
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // }
+
+    const res = await request
+      .get(`/graphql?query={momentsByEvent(idee:"5f2b94ce639af760fb9fdbf9"){_id, analysis_type, definition_id}}`)
+
+    // expect(res.body).toEqual(expectedResponse);
+    expect(res.statusCode).toBe(400)
     done();
   });
 });

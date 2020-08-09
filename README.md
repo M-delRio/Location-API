@@ -66,7 +66,13 @@ query{
     analysis_type
     mode
     distance
-    waypoints
+    waypoints {
+      type
+      latitude
+      longitude
+      timestamp
+      accuracy
+    }
     trajectory
     latitude
     longitude
@@ -107,7 +113,13 @@ query{
     analysis_type
     mode
     distance
-    waypoints
+    waypoints {
+      type
+      latitude
+      longitude
+      timestamp
+      accuracy
+      }
     trajectory
     latitude
     longitude

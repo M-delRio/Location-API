@@ -48,20 +48,19 @@ var findMomentsByDate = /*#__PURE__*/function () {
 
           case 10:
             fetchedMoments = _context.sent;
-            console.log(fetchedMoments);
             return _context.abrupt("return", fetchedMoments);
 
-          case 15:
-            _context.prev = 15;
+          case 14:
+            _context.prev = 14;
             _context.t0 = _context["catch"](7);
             console.log(_context.t0);
 
-          case 18:
+          case 17:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[7, 15]]);
+    }, _callee, null, [[7, 14]]);
   }));
 
   return function findMomentsByDate(_x, _x2) {
