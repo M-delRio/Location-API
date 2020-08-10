@@ -39,7 +39,7 @@ var eventSchema = new _mongoose.Schema({
     required: false
   },
   trajectory: {
-    type: String,
+    type: _mongoose.Schema.Types.Mixed,
     required: false
   },
   latitude: {

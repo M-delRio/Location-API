@@ -30,7 +30,7 @@ const eventSchema = new Schema({
     required: false
   },
   trajectory: {
-    type: String,
+    type: Schema.Types.Mixed,
     required: false
   },
   latitude: {

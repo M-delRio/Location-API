@@ -13,17 +13,6 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _Event = _interopRequireDefault(require("../../models/Event"));
 
-// items.find({
-//   created_at: {
-//     $gte: "Mon May 30 18:47:00 +0000 2015",
-//     $lt: "Sun May 30 20:40:36 +0000 2010"
-//   }
-// })
-// .find({$and:[{startDate:{$lte:new Date()}},{endDate:{$gte:new Date()}}]})
-// YYYY-MM-DD
-// YYYY-mm-ddTHH:MM:ssZ
-// 2017-10-01T23:28:00.000+02:00
-// +hh:mm or -hh:mm
 var findEventsOnDate = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(obj, args) {
     var timeZone, startTime, endTime, fetchedEvents;
@@ -38,10 +27,7 @@ var findEventsOnDate = /*#__PURE__*/function () {
             }
 
             startTime = args.date + "T00:00:00" + timeZone;
-            endTime = args.date + "T23:59:59.999" + timeZone; // console.log(args.timezone);
-            // console.log(startTime);
-            // console.log(endTime);
-
+            endTime = args.date + "T23:59:59.999" + timeZone;
             _context.prev = 4;
             _context.next = 7;
             return _Event["default"].find({

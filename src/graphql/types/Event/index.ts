@@ -7,6 +7,11 @@ export default `
     accuracy: String!
   }
 
+  type Trajectory {
+    type: String!,
+    encoded: String!
+  }
+
   type Location {
     significance: String!
   }
@@ -20,7 +25,7 @@ export default `
     mode: String,
     distance: String,
     waypoints: [Waypoint],
-    trajectory: String,
+    trajectory: Trajectory,
     latitude: String,
     longitude: String,
     location: [Location],

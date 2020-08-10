@@ -30,13 +30,10 @@ var findMomentsByDate = /*#__PURE__*/function () {
 
           case 2:
             targetEvent = _context.sent;
-            // console.log(targetEvent);
             startTime = targetEvent.start;
             endTime = targetEvent.end;
-            console.log(startTime);
-            console.log(endTime);
-            _context.prev = 7;
-            _context.next = 10;
+            _context.prev = 5;
+            _context.next = 8;
             return _Moment["default"].find({
               start: {
                 $gte: startTime
@@ -46,21 +43,21 @@ var findMomentsByDate = /*#__PURE__*/function () {
               }
             });
 
-          case 10:
+          case 8:
             fetchedMoments = _context.sent;
             return _context.abrupt("return", fetchedMoments);
 
-          case 14:
-            _context.prev = 14;
-            _context.t0 = _context["catch"](7);
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](5);
             console.log(_context.t0);
 
-          case 17:
+          case 15:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[7, 14]]);
+    }, _callee, null, [[5, 12]]);
   }));
 
   return function findMomentsByDate(_x, _x2) {
@@ -68,16 +65,5 @@ var findMomentsByDate = /*#__PURE__*/function () {
   };
 }();
 
-var _default = findMomentsByDate; // items.find({
-//   created_at: {
-//     $gte: "Mon May 30 18:47:00 +0000 2015",
-//     $lt: "Sun May 30 20:40:36 +0000 2010"
-//   }
-// })
-// .find({$and:[{startDate:{$lte:new Date()}},{endDate:{$gte:new Date()}}]})
-// YYYY-MM-DD
-// YYYY-mm-ddTHH:MM:ssZ
-// 2017-10-01T23:28:00.000+02:00
-// +hh:mm or -hh:mm
-
+var _default = findMomentsByDate;
 exports["default"] = _default;

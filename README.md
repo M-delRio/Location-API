@@ -141,7 +141,10 @@ query{
       timestamp
       accuracy
     }
-    trajectory
+    trajectory {
+      type
+      encoded
+    }
     latitude
     longitude
     location {
@@ -189,8 +192,11 @@ query{
       longitude
       timestamp
       accuracy
-      }
-    trajectory
+    }
+    trajectory {
+      type
+      encoded
+    }
     latitude
     longitude
     location {
@@ -221,8 +227,11 @@ query{
       longitude
       timestamp
       accuracy
-      }
-    trajectory
+    }
+    trajectory {
+      type
+      encoded
+    }
     latitude
     longitude
     location {
