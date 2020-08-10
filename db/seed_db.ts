@@ -110,10 +110,11 @@ const insertEvents = async (data: any, db: any) => {
   }
 }
 
+// driver function to seedDB
 const seedDB = async () => {
   const mockData = fs.readFileSync('./db/mock_data.json');
   const rawData = JSON.parse(mockData).data.user;
-  let client;
+  let client: any;
 
   try {
     client = await MongoClient.connect(url);

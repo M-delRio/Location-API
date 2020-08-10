@@ -12,9 +12,15 @@ The app is currently configured to retrieve data from a local store. To use the 
 mongod --dbpath=/location_api
 ```
 
-The following command (executed from the root folder of the API) seeds the database: 
+Run the following command (from the root folder of the app) to add indices to the **moments** (**start** field) and **events** (**start** and **end** field) collections
+
 ```console
-npx ts-node ./db/seed_localdb.ts
+npx ts-node ./db/db_indexing.ts
+```
+
+Run the following command (from the root folder of the app) to seed the database: 
+```console
+npx ts-node ./db/seed_db.ts
 ```
 
 ## Deployment
