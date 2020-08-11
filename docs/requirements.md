@@ -1,6 +1,6 @@
 For the test, we would like you to build a small API with information about the user’s behavior. Data is fetched and exposed in form of a timeline for dashboards and usage by clients.
 
-(I've placed the JSON dataset that was provided in the `db/mock_data.json` file.)
+(the provide JSON dataset is placed in the `db/mock_data.json` file.)
 
 TypeScript and GraphQL must be used.
 

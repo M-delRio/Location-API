@@ -12,6 +12,8 @@ var _server = _interopRequireDefault(require("../server"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
+var _Event = _interopRequireDefault(require("../models/Event"));
+
 var uri = "mongodb://127.0.0.1:27017/location_api";
 var request = (0, _supertest["default"])(_server["default"]);
 var options = {
@@ -27,20 +29,27 @@ describe("query an ​event​ by a unique identifier", function () {
   });
   it("response with valid id query arg", /*#__PURE__*/function () {
     var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(done) {
-      var res;
+      var fetchedEvent, res;
       return _regenerator["default"].wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return request.get("/graphql?query={event(id:\"5f2b94ce639af760fb9fdc69\"){_id}}");
+              return _Event["default"].findOne({
+                "start": new Date("2017-10-01T23:19:58.178000+02:00")
+              });
 
             case 2:
+              fetchedEvent = _context.sent;
+              _context.next = 5;
+              return request.get("/graphql?query={event(id:\"".concat(String(fetchedEvent._id), "\"){_id}}"));
+
+            case 5:
               res = _context.sent;
               expect(res.statusCode).toBe(200);
               done();
 
-            case 5:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -87,21 +96,30 @@ describe("query an ​event​ by a unique identifier", function () {
   }());
   it("error with invalid subfield", /*#__PURE__*/function () {
     var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(done) {
-      var res;
+      var expectedResponse, res;
       return _regenerator["default"].wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.next = 2;
+              expectedResponse = {
+                "errors": [{
+                  "message": "Cannot query field \"_idee\" on type \"Event\". Did you mean \"_id\" or \"mode\"?",
+                  "locations": [{
+                    "line": 1,
+                    "column": 39
+                  }]
+                }]
+              };
+              _context3.next = 3;
               return request.get("/graphql?query={event(id:\"5f2b94ce639af760fb9fdc69\"){_idee}}");
 
-            case 2:
+            case 3:
               res = _context3.sent;
-              // expect(res.body).toEqual(expectedResponse);
+              expect(res.body).toEqual(expectedResponse);
               expect(res.statusCode).toBe(400);
               done();
 
-            case 5:
+            case 7:
             case "end":
               return _context3.stop();
           }
@@ -185,7 +203,7 @@ describe("query events that are related to a moment", function () {
   });
   it("response with existing object id", /*#__PURE__*/function () {
     var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(done) {
-      var expectedBody, res;
+      var expectedBody, fetchedEvent, res;
       return _regenerator["default"].wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
@@ -193,22 +211,30 @@ describe("query events that are related to a moment", function () {
               expectedBody = {
                 "data": {
                   "momentsByEvent": [{
-                    "_id": "5f2b94cd639af760fb9fda13",
+                    "start": "1506893084000",
+                    "end": "1506893280000",
                     "analysis_type": "processed",
-                    "definition_id": "nearby_work"
+                    "definition_id": "nearby_home"
                   }]
                 }
               };
               _context6.next = 3;
-              return request.get("/graphql?query={momentsByEvent(id:\"5f2b94ce639af760fb9fdbf9\"){_id, analysis_type, definition_id}}");
+              return _Event["default"].findOne({
+                "start": new Date("2017-10-01T23:19:58.178000+02:00")
+              });
 
             case 3:
+              fetchedEvent = _context6.sent;
+              _context6.next = 6;
+              return request.get("/graphql?query={momentsByEvent(id:\"".concat(String(fetchedEvent._id), "\"){start,end,analysis_type, definition_id}}"));
+
+            case 6:
               res = _context6.sent;
               expect(res.body).toEqual(expectedBody);
               expect(res.statusCode).toBe(200);
               done();
 
-            case 7:
+            case 10:
             case "end":
               return _context6.stop();
           }
@@ -232,7 +258,6 @@ describe("query events that are related to a moment", function () {
 
             case 2:
               res = _context7.sent;
-              // expect(res.body).toEqual(expectedResponse);
               expect(res.statusCode).toBe(400);
               done();
 
@@ -249,14 +274,14 @@ describe("query events that are related to a moment", function () {
     };
   }());
 });
-describe("query events that occurred on a specific date", function () {
+describe("query all events", function () {
   beforeAll(function () {
     _mongoose["default"].connect(uri, options);
   });
   afterAll(function (done) {
     _mongoose["default"].disconnect(done);
   });
-  it("response with valid date query arg", /*#__PURE__*/function () {
+  it("valid return according to pagination", /*#__PURE__*/function () {
     var _ref8 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee8(done) {
       var res;
       return _regenerator["default"].wrap(function _callee8$(_context8) {
@@ -264,11 +289,11 @@ describe("query events that occurred on a specific date", function () {
           switch (_context8.prev = _context8.next) {
             case 0:
               _context8.next = 2;
-              return request.get("/graphql?query={eventsOnDate(date:\"2017-10-01\", timezone: \"%2B02:00\"){type}}");
+              return request.get("/graphql?query={events(limit:1, offset: 1){_id}}");
 
             case 2:
               res = _context8.sent;
-              expect(res.statusCode).toBe(200);
+              expect(res.body.data.events.length).toBe(1);
               done();
 
             case 5:
@@ -283,7 +308,7 @@ describe("query events that occurred on a specific date", function () {
       return _ref8.apply(this, arguments);
     };
   }());
-  it("response with invalid subfield", /*#__PURE__*/function () {
+  it("valid return according to pagination", /*#__PURE__*/function () {
     var _ref9 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee9(done) {
       var res;
       return _regenerator["default"].wrap(function _callee9$(_context9) {
@@ -291,11 +316,11 @@ describe("query events that occurred on a specific date", function () {
           switch (_context9.prev = _context9.next) {
             case 0:
               _context9.next = 2;
-              return request.get("/graphql?query={eventsOnDate(date:\"2017-10-01\", timezone: \"%2B02:00\"){typee}}");
+              return request.get("/graphql?query={events(limit:11, offset: 1){_id}}");
 
             case 2:
               res = _context9.sent;
-              expect(res.statusCode).toBe(400);
+              expect(res.body.data.events.length).toBe(11);
               done();
 
             case 5:
@@ -308,146 +333,6 @@ describe("query events that occurred on a specific date", function () {
 
     return function (_x9) {
       return _ref9.apply(this, arguments);
-    };
-  }());
-});
-describe("query all events", function () {
-  beforeAll(function () {
-    _mongoose["default"].connect(uri, options);
-  });
-  afterAll(function (done) {
-    _mongoose["default"].disconnect(done);
-  });
-  it("valid return according to pagination", /*#__PURE__*/function () {
-    var _ref10 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee10(done) {
-      var res;
-      return _regenerator["default"].wrap(function _callee10$(_context10) {
-        while (1) {
-          switch (_context10.prev = _context10.next) {
-            case 0:
-              _context10.next = 2;
-              return request.get("/graphql?query={events(limit:1, offset: 1){_id}}");
-
-            case 2:
-              res = _context10.sent;
-              expect(res.body.data.events.length).toBe(1);
-              done();
-
-            case 5:
-            case "end":
-              return _context10.stop();
-          }
-        }
-      }, _callee10);
-    }));
-
-    return function (_x10) {
-      return _ref10.apply(this, arguments);
-    };
-  }());
-  it("valid return according to pagination", /*#__PURE__*/function () {
-    var _ref11 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee11(done) {
-      var res;
-      return _regenerator["default"].wrap(function _callee11$(_context11) {
-        while (1) {
-          switch (_context11.prev = _context11.next) {
-            case 0:
-              _context11.next = 2;
-              return request.get("/graphql?query={events(limit:11, offset: 1){_id}}");
-
-            case 2:
-              res = _context11.sent;
-              expect(res.body.data.events.length).toBe(11);
-              done();
-
-            case 5:
-            case "end":
-              return _context11.stop();
-          }
-        }
-      }, _callee11);
-    }));
-
-    return function (_x11) {
-      return _ref11.apply(this, arguments);
-    };
-  }()); // it("response with invalid subfield", async (done) => {
-  //   const res = await request
-  //     .get(`/graphql?query={eventsOnDate(date:"2017-10-01", timezone: "%2B02:00"){typee}}`)
-  //   expect(res.statusCode).toBe(400)
-  //   done();
-  // });
-});
-describe("query events that are related to a moment", function () {
-  beforeAll(function () {
-    _mongoose["default"].connect(uri, options);
-  });
-  afterAll(function (done) {
-    _mongoose["default"].disconnect(done);
-  });
-  it("response with existing object id", /*#__PURE__*/function () {
-    var _ref12 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee12(done) {
-      var expectedBody, res;
-      return _regenerator["default"].wrap(function _callee12$(_context12) {
-        while (1) {
-          switch (_context12.prev = _context12.next) {
-            case 0:
-              expectedBody = {
-                "data": {
-                  "momentsByEvent": [{
-                    "_id": "5f2b94cd639af760fb9fda13",
-                    "analysis_type": "processed",
-                    "definition_id": "nearby_work"
-                  }]
-                }
-              };
-              _context12.next = 3;
-              return request.get("/graphql?query={momentsByEvent(id:\"5f2b94ce639af760fb9fdbf9\"){_id, analysis_type, definition_id}}");
-
-            case 3:
-              res = _context12.sent;
-              expect(res.body).toEqual(expectedBody);
-              expect(res.statusCode).toBe(200);
-              done();
-
-            case 7:
-            case "end":
-              return _context12.stop();
-          }
-        }
-      }, _callee12);
-    }));
-
-    return function (_x12) {
-      return _ref12.apply(this, arguments);
-    };
-  }());
-  it("error with invalid subfield", /*#__PURE__*/function () {
-    var _ref13 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee13(done) {
-      var res;
-      return _regenerator["default"].wrap(function _callee13$(_context13) {
-        while (1) {
-          switch (_context13.prev = _context13.next) {
-            case 0:
-              _context13.next = 2;
-              return request.get("/graphql?query={momentsByEvent(idee:\"5f2b94ce639af760fb9fdbf9\"){_id, analysis_type, definition_id}}");
-
-            case 2:
-              res = _context13.sent;
-              // expect(res.body).toEqual(expectedResponse);
-              expect(res.statusCode).toBe(400);
-              done();
-
-            case 5:
-            case "end":
-              return _context13.stop();
-          }
-        }
-      }, _callee13);
-    }));
-
-    return function (_x13) {
-      return _ref13.apply(this, arguments);
     };
   }());
 });

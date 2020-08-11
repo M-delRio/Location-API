@@ -32,32 +32,31 @@ var findMomentsByDate = /*#__PURE__*/function () {
             targetEvent = _context.sent;
             startTime = targetEvent.start;
             endTime = targetEvent.end;
-            _context.prev = 5;
-            _context.next = 8;
+            console.log(startTime, endTime);
+            _context.prev = 6;
+            _context.next = 9;
             return _Moment["default"].find({
               start: {
-                $gte: startTime
-              },
-              end: {
+                $gte: startTime,
                 $lt: endTime
               }
             });
 
-          case 8:
+          case 9:
             fetchedMoments = _context.sent;
             return _context.abrupt("return", fetchedMoments);
 
-          case 12:
-            _context.prev = 12;
-            _context.t0 = _context["catch"](5);
+          case 13:
+            _context.prev = 13;
+            _context.t0 = _context["catch"](6);
             console.log(_context.t0);
 
-          case 15:
+          case 16:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[5, 12]]);
+    }, _callee, null, [[6, 13]]);
   }));
 
   return function findMomentsByDate(_x, _x2) {

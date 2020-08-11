@@ -21,7 +21,7 @@ The Event object includes required attributes (**type**, **start**, **end**, and
 
 `Set A optional attributes`: **latitude**, **longitude**, and **location** 
 
-`Set B optional attributes`: **mode**, **distance**, **waypoints**, **trajectory**).
+`Set B optional attributes`: **mode**, **distance**, **waypoints**, **trajectory**
 
 ### Set A optional attributes
 ```
@@ -67,20 +67,19 @@ The Event object includes required attributes (**type**, **start**, **end**, and
 - MongoDB
 
 ## Database
-The app is currently configured to retrieve data from a local store. To use the current version of the API, MongoDB needs to be installed and running locally. A `location_api` database is required and can be created from the console with the following command:
+The app is currently configured to retrieve data from a local store. To use the current version of the API, MongoDB needs to be installed and running locally. 
+
+The step below will create a database named `location_api` if one doesn't exist. If a `location_api` database has already been created data will be added to the existing database. 
+
+Run the following command (from the root folder of the app) to seed the database: 
 ```
-mongod --dbpath=/location_api
+npx ts-node ./db/seed_db.ts
 ```
 
 Run the following command (from the root folder of the app) to add indices to the **moments** (**start** field) and **events** (**start** and **end** field) collections
 
 ```
 npx ts-node ./db/db_indexing.ts
-```
-
-Run the following command (from the root folder of the app) to seed the database: 
-```
-npx ts-node ./db/seed_db.ts
 ```
 
 ## Deployment
@@ -103,7 +102,7 @@ query {
   }
 }
 ```
-translates to the following query string:
+Translates to the following query string:
 ```
 query={momentsByEvent(id:"5f2b94ce639af760fb9fdbf9"){_id, analysis_type, definition_id}}
 ```
@@ -192,7 +191,7 @@ The *event field* requires an **id** argument. This argument, a string, is used 
 
 ```console
 query{
-  event(id: "5f2b94ce639af760fb9fdc69") { 
+  event(id: "5f31d86b4819b14b95ea36c8") { 
     _id
     type
     start
@@ -221,11 +220,11 @@ query{
 ```
 
 ## 2. Query ​moments that relate to a specific event
-The *event field* requires an **id** argument. This argument, a string, is used to target an Event. All Moments that relate to the target Event (that occurred within the timeframe of the Event) are returned. 
+The *event field* requires an **id** argument. This argument, a string, is used to target an Event. All Moments that relate to the target Event (moments that occurred within the timeframe of the Event) are returned. 
 
 ```
 query{
-  momentsByEvent(id: "5f2b94ce639af760fb9fdbf9") { 
+  momentsByEvent(id: "5f31d86b4819b14b95ea36c8") { 
     _id
     start
     end
@@ -329,8 +328,23 @@ MongoDB is used to store data. A non-relational DB is appropriate for our use ca
 ### Express app
 - AWS Elastic Beanstalk is a service that could be used to deploy the Express app, features include load balancing and auto-scaling
 
-## Database
+### Database
 - MongoDB Atlas, a hosted database service for MongoDB, has many features including auto-scaling
 
+## Restarts - Process Manager and an Init System
+Currently the app is simply run with the `npm start`. However this is not a robust setup for deployment. If the app or server crashes a reliable mechanism is required to ensure the app is run. 
+
+A process manager such as *PM2* can be used to run the app as it restarts the app if it crashes.
+
+An init system, such as *systemd*, can be used to encapsulate the process manager and if the server crashes the process manager will restart following an OS restart to ensure the app restarts. 
+
+## Web Server - Nginx
+A web server such as Nginx can provide many features to decrease the application server(s) load.
+
+### Compression
+Compression can be enabled via the node *compression* module however this role is better suited for a web server. 
+
+### SSL Offloading
+Used as a proxy Nginx can offload the SSL decryption processing from backend servers. 
 
 

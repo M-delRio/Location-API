@@ -4,6 +4,9 @@ import express from "express";
 import cors from "cors";
 
 import schema from "./graphql";
+import dotenv from "dotenv"
+
+dotenv.config();
 
 const app = express();
 

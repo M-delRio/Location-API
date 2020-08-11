@@ -6,7 +6,7 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _server = _interopRequireDefault(require("./server"));
 
-var port = process.env.PORT || 3000;
+var port = 3000;
 var uri = "mongodb://127.0.0.1:27017/location_api"; // connect to MongoDB with Mongoose and start server
 
 var options = {

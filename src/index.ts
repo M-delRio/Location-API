@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import app from "./server";
-const port = process.env.PORT || 3000;
+const port = 3000;
+
 const uri = "mongodb://127.0.0.1:27017/location_api";
 
 // connect to MongoDB with Mongoose and start server
