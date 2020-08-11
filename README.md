@@ -1,32 +1,67 @@
 # Location API
 
-This GraphQL API accepts query params to a single endpoint. Four query types are supported returning data related **Event** and **Moment** objects.
+This GraphQL API accepts query params to a single endpoint. Four query types are supported returning data related **Moment** and **Event** objects.
+
+## The Moment Object 
+```
+{
+  "start": "2017-10-01T23:28:00.000+02:00",
+  "end": "2017-10-02T08:47:28.325+02:00",
+  "analysis_type": "processed",
+  "moment_definition_id": "home"
+}
+```
+
+## The Event Object
+```
+{
+  "type": "Transport",
+  "start": "2017-09-01T09:10:59.040000+02:00",
+  "end": "2017-09-01T09:24:45.999000+02:00",
+  "analysis_type": "processed",
+  "mode": "car",
+  "distance": 3748,
+  "waypoints": [
+    {
+      "type": "Waypoint",
+      "latitude": 51.21406,
+      "longitude": 4.39299,
+      "timestamp": "2017-09-01T09:10:59.040000+02:00",
+      "accuracy": 0
+    }
+  ],
+  "trajectory": {
+    "type": "TransportTrajectory",
+    "encoded": "{encodedData}"
+  }
+}
+```
 
 ## Requirements
 - Node.js
 - MongoDB
 
 ## Database
-The app is currently configured to retrieve data from a local store. To use the current version of the API MongoDB needs to be installed and running locally. A `location_api` database is required and can be created from the console with the following command
-```console
+The app is currently configured to retrieve data from a local store. To use the current version of the API MongoDB needs to be installed and running locally. A `location_api` database is required and can be created from the console with the following command:
+```
 mongod --dbpath=/location_api
 ```
 
 Run the following command (from the root folder of the app) to add indices to the **moments** (**start** field) and **events** (**start** and **end** field) collections
 
-```console
+```
 npx ts-node ./db/db_indexing.ts
 ```
 
 Run the following command (from the root folder of the app) to seed the database: 
-```console
+```
 npx ts-node ./db/seed_db.ts
 ```
 
 ## Deployment
 The command found below will deploy the server locally with the following endpoint
 `localhost:3000/graphql`:
-```console
+```
 npm run build && npm start
 ```
 
@@ -163,7 +198,7 @@ query{
 ## 2. Query ​moments that relate to a specific event
 The *event field* requires an **id** argument. This argument, a string, is used to target an Event. All Moments that relate to the target Event (that occurred within the timeframe of the Event) are returned. 
 
-```console
+```
 query{
   momentsByEvent(id: "5f2b94ce639af760fb9fdbf9") { 
     _id
@@ -182,7 +217,7 @@ The **limit** integer argument determines how many **Event** objects will be ret
 
 The **offset** integer argument determines at which **Event** (**Events** are sorted according to their start date) the query should begin. 
 
-```console
+```
 query{
   events(limit:1, offset:10) { 
     _id
@@ -217,7 +252,7 @@ The *event field* requires a **date** string argument with the following format:
 
 The *event field* also accepts an optional **timezone** string argument with the following format: **+hh:mm** or **-hh:mm** . 
 
-```console
+```
 query{
   eventsOnDate(date: "2017-10-01", timezone: "+02:00") { 
     _id
@@ -247,19 +282,20 @@ query{
 }
 ```
 
+# Testing
+
+A functional testing suite is available, written using Jest and Supertest. To run the test suite:
+
+`npm run test`
+
 # Production notes
 ## Query format
 - the current use cases for our API all relate to query requests, as such HTTP GET requests are more semantically appropriate however existing support for POST requests can be added to future iterations of this documentation
-
-## Requirements
-- Node.js
-- MongoDB
 
 ## Database
 MongoDB is used to store data. A non-relational DB is appropriate for our use case:
 - **entity relationship**: there is a relationship between `events` and `moments` (an event can be associated with several moments) however this relationship is established dynamically by the `start` and `end` values of each entity
 - **scaling**: given the volume of data collected horizontal scaling is likely and can be simpler with denormalized data 
-- to perform well with large amounts of data the DB needs to be optimized, namely indexing *start* and *end* attributes
 
 
 
