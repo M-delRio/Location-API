@@ -1,8 +1,12 @@
 # Location API
 
-This GraphQL API accepts query params to a single endpoint. Four query types are supported returning data related **Moment** and **Event** objects.
+This GraphQL API accepts requests with query params with a single endpoint. Four query types are supported that return JSON data related to **Moment** and **Event** objects.
 
 ## The Moment Object 
+
+Moments include a **start** and **end** time and are categorized by the **moment_definition_id** attribute. 
+
+**Moments** are associated with **events**, the relation exists if their respective timelines overlap. 
 ```
 {
   "start": "2017-10-01T23:28:00.000+02:00",
@@ -13,6 +17,27 @@ This GraphQL API accepts query params to a single endpoint. Four query types are
 ```
 
 ## The Event Object
+The Event object includes required attributes (**type**, **start**, **end**, and **analysis_type**) and may additionally include optional attributes:
+
+`Set A optional attributes`: **latitude**, **longitude**, and **location** 
+
+`Set B optional attributes`: **mode**, **distance**, **waypoints**, **trajectory**).
+
+### Set A optional attributes
+```
+{
+  "type": "Stationary",
+  "start": "2017-10-01T23:28:00+02:00",
+  "end": "2017-10-02T08:47:28.325000+02:00",
+  "analysis_type": "processed",
+  "latitude": 51.21404,
+  "longitude": 4.39289,
+  "location": {
+    "significance": "home"
+  }
+}
+```
+### Set B optional attributes
 ```
 {
   "type": "Transport",
@@ -37,12 +62,12 @@ This GraphQL API accepts query params to a single endpoint. Four query types are
 }
 ```
 
-## Requirements
+## Environment Requirements
 - Node.js
 - MongoDB
 
 ## Database
-The app is currently configured to retrieve data from a local store. To use the current version of the API MongoDB needs to be installed and running locally. A `location_api` database is required and can be created from the console with the following command:
+The app is currently configured to retrieve data from a local store. To use the current version of the API, MongoDB needs to be installed and running locally. A `location_api` database is required and can be created from the console with the following command:
 ```
 mongod --dbpath=/location_api
 ```
@@ -83,7 +108,7 @@ translates to the following query string:
 query={momentsByEvent(id:"5f2b94ce639af760fb9fdbf9"){_id, analysis_type, definition_id}}
 ```
 
-For clarity request examples included in this documentation will be demonstrated with query values expressed as JSON. 
+For clarity, request examples included in this documentation will be demonstrated with query values expressed as JSON. 
 
 Various tools exist to simplify sending queries such as [GraphiQL](https://www.apollographql.com/blog/4-simple-ways-to-call-a-graphql-api-a6807bcdb355/)
 
@@ -292,10 +317,20 @@ A functional testing suite is available, written using Jest and Supertest. To ru
 ## Query format
 - the current use cases for our API all relate to query requests, as such HTTP GET requests are more semantically appropriate however existing support for POST requests can be added to future iterations of this documentation
 
+## Authorization
+- authorization and authentication can be outsourced to [Auth0](https://auth0.com/docs/quickstart/webapp/nodejs) to get a robust solution up and running quickly
+
 ## Database
 MongoDB is used to store data. A non-relational DB is appropriate for our use case:
 - **entity relationship**: there is a relationship between `events` and `moments` (an event can be associated with several moments) however this relationship is established dynamically by the `start` and `end` values of each entity
 - **scaling**: given the volume of data collected horizontal scaling is likely and can be simpler with denormalized data 
+
+## Hosting
+### Express app
+- AWS Elastic Beanstalk is a service that could be used to deploy the Express app, features include load balancing and auto-scaling
+
+## Database
+- MongoDB Atlas, a hosted database service for MongoDB, has many features including auto-scaling
 
 
 
