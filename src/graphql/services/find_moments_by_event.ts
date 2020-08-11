@@ -10,12 +10,13 @@ const findMomentsByDate = async (obj: any, args: { id: string }) => {
   const startTime: string = targetEvent.start;
   const endTime: string = targetEvent.end;
 
+  console.log(startTime, endTime);
+
+
   try {
     const fetchedMoments = await Moment.find({
       start: {
-        $gte: startTime
-      },
-      end: {
+        $gte: startTime,
         $lt: endTime
       }
     })
